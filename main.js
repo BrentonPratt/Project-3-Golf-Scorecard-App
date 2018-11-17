@@ -1,8 +1,10 @@
 let courseList;
+let myCourse;
 let numholes = 18;
 let outHoles = 9;
 let inHoles = 18;
 let numPlayers;
+let globalTee;
 
 function getInfo(){
     let xhttp = new XMLHttpRequest();
@@ -37,8 +39,18 @@ function loadCourse(courseID) {
     xhttp.send();
 }
 
+function hideModal() {
+    $(".modal").hide();
+    makeCard();
+}
+
+function chooseTee(teeValue) {
+    globalTee = teeValue;
+
+}
+
 function makeCard() {
-    $(".players").append("<div>Players</div>");
+    $(".players").append("<div class='names'>Players</div>");
     for (let i = 1; i <= outHoles; i++){
         $(".leftCard").append("<div id='col"+ i +"' class='column'>" + i +"</div>");
     }
@@ -62,7 +74,12 @@ function addHoles() {
             $("#col"+ h).append("<input class='hole' type='number' id='p"+ p +"h"+ h +"'>");
         }
     }
-    $(".modal").hide();
+    $(".players").append('<div class="infoBox" id="par">Par</div>');
+    $(".players").append('<div class="infoBox" id="yardage">Yardage</div>');
+    $(".players").append('<div class="infoBox" id="handicap">Handicap</div>');
+    $("#totalCol").append('<input class="totalBox" id="parTotal" readonly>');
+    $("#totalCol").append('<input class="totalBox" id="yardageTotal" readonly>');
+    $("#totalCol").append('<input class="totalBox" id="handicapTotal" readonly>');
     $(".content").css("filter", "blur(0)");
     $(".Trash").click(function(){
         $(this).parent().animate({
@@ -72,19 +89,24 @@ function addHoles() {
 
         });
     });
-    addCourseInfo();
-}
-
-/*
-function addCourseInfo(){
-    let par = [];
-    let yardage = [];
-    let handicap = [];
-    for (let i = 0; i < numholes; i++){
-
+    for(let h = 0; h < numholes; h++){
+        console.log(myCourse.data.holes[h].teeBoxes[0]);
+        console.log(globalTee);
+        $("#col"+ (h + 1)).append('<div class="dataBox">'+ myCourse.data.holes[h].teeBoxes[globalTee].par +'</div>');
+        $("#col"+ (h + 1)).append('<div class="dataBox">'+ myCourse.data.holes[h].teeBoxes[globalTee].yards +'</div>');
+        $("#col"+ (h + 1)).append('<div class="dataBox">'+ myCourse.data.holes[h].teeBoxes[globalTee].hcp +'</div>');
     }
+
 }
-*/
+
+(function checkName(myVal){
+    $(".playerBox").each(function(){
+        let player = $(this).html();
+        if(myVal === player){
+            $(".players").html('Sorry, that name is already used.')
+        }
+    });
+})();
 
 /*
 function addScore(myid) {
