@@ -68,7 +68,11 @@ html, body{
     background-color: #FFED70;
 }
 
-.hole, .out, .in, .total, .courseData, .totalBox{
+.hole, .courseData, .totalBox{
     width: 30px;
     padding: 10px;
+}
+
+.out, .in, .total{
+    padding: 19px;
 }

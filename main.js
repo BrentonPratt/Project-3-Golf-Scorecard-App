@@ -7,6 +7,7 @@ let numPlayers;
 let globalTee;
 let parSum = 0;
 let yardSum = 0;
+let myOutScore = 0;
 
 
 function getInfo(){
@@ -70,11 +71,11 @@ function addHoles() {
     numPlayers = $(".numInput").val();
     for(let p = 1; p <= numPlayers; p++){
         $(".players").append("<div class='playerBox'><span contenteditable='true'>Player "+ p +"</span><i class=\"Trash fas fa-trash-alt\""+ p +"></i></div>");
-        $("#outCol").append("<input class='out' id='out"+ p +"' readonly>");
-        $("#inCol").append("<input class='in' id='in"+ p +"' readonly>");
-        $("#totalCol").append("<input class='total' id='total"+ p +"' readonly>");
+        $("#outCol").append("<div class='out' id='out"+ p +"'></div>");
+        $("#inCol").append("<div class='in' id='in"+ p +"'></div>");
+        $("#totalCol").append("<div class='total' id='total"+ p +"'></div>");
         for(let h = 1; h <= numholes; h++){
-            $("#col"+ h).append("<input class='hole' type='number' id='p"+ p +"h"+ h +"'>");
+            $("#col"+ h).append("<input class='hole"+ p +"' type='number' id='p"+ p +"h"+ h +"'>");
         }
     }
     $(".players").append('<div class="infoBox" id="par">Par</div>');
@@ -98,28 +99,26 @@ function addHoles() {
     }
     $('.parBox').each(function () {
         parSum += (+ $(this).text());
-        console.log(parSum);
     });
 
     $('#parTotal').text(parSum);
 
     $('.yardBox').each(function () {
         yardSum += (+ $(this).text());
-        console.log(yardSum);
     });
 
     $('#yardTotal').text(yardSum);
 
+    $('.hole')
 }
 
-
-/*
-function addScore(myid) {
-    let myscore = 0;
-    //parse player number out of id, make that p
-    for(){
-        let scoreItem = $('#p' + p + 'h' + i).val();
-        myscore += scoreItem;
+function addOutScore(myid) {
+    let myOutScore = 0;
+    myid = $('.hole').attr('id').match(/\d+/)[0];
+    for(let i = 1; i <= outHoles; i++){
+        let scoreItem = $('#p' + myid + 'h' + i).val();
+        myOutScore += scoreItem;
     }
-    return myscores;
-}*/
+    console.log('p'+ myid +' out score is: '+ myOutScore);
+    return myOutScore;
+}
