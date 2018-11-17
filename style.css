@@ -50,7 +50,7 @@ html, body{
     width: 80px;
 }
 
-.dataBox{
+.parBox, .yardBox, .hcpBox{
     padding: 10px;
 }
 

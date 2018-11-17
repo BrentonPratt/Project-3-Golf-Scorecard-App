@@ -5,6 +5,9 @@ let outHoles = 9;
 let inHoles = 18;
 let numPlayers;
 let globalTee;
+let parSum = 0;
+let yardSum = 0;
+
 
 function getInfo(){
     let xhttp = new XMLHttpRequest();
@@ -77,9 +80,8 @@ function addHoles() {
     $(".players").append('<div class="infoBox" id="par">Par</div>');
     $(".players").append('<div class="infoBox" id="yardage">Yardage</div>');
     $(".players").append('<div class="infoBox" id="handicap">Handicap</div>');
-    $("#totalCol").append('<input class="totalBox" id="parTotal" readonly>');
-    $("#totalCol").append('<input class="totalBox" id="yardageTotal" readonly>');
-    $("#totalCol").append('<input class="totalBox" id="handicapTotal" readonly>');
+    $("#totalCol").append('<div class="totalBox" id="parTotal"></div>');
+    $("#totalCol").append('<div class="totalBox" id="yardTotal"></div>');
     $(".content").css("filter", "blur(0)");
     $(".Trash").click(function(){
         $(this).parent().animate({
@@ -90,23 +92,26 @@ function addHoles() {
         });
     });
     for(let h = 0; h < numholes; h++){
-        console.log(myCourse.data.holes[h].teeBoxes[0]);
-        console.log(globalTee);
-        $("#col"+ (h + 1)).append('<div class="dataBox">'+ myCourse.data.holes[h].teeBoxes[globalTee].par +'</div>');
-        $("#col"+ (h + 1)).append('<div class="dataBox">'+ myCourse.data.holes[h].teeBoxes[globalTee].yards +'</div>');
-        $("#col"+ (h + 1)).append('<div class="dataBox">'+ myCourse.data.holes[h].teeBoxes[globalTee].hcp +'</div>');
+        $("#col"+ (h + 1)).append('<div class="parBox">'+ myCourse.data.holes[h].teeBoxes[globalTee].par +'</div>');
+        $("#col"+ (h + 1)).append('<div class="yardBox">'+ myCourse.data.holes[h].teeBoxes[globalTee].yards +'</div>');
+        $("#col"+ (h + 1)).append('<div class="hcpBox">'+ myCourse.data.holes[h].teeBoxes[globalTee].hcp +'</div>');
     }
+    $('.parBox').each(function () {
+        parSum += (+ $(this).text());
+        console.log(parSum);
+    });
+
+    $('#parTotal').text(parSum);
+
+    $('.yardBox').each(function () {
+        yardSum += (+ $(this).text());
+        console.log(yardSum);
+    });
+
+    $('#yardTotal').text(yardSum);
 
 }
 
-(function checkName(myVal){
-    $(".playerBox").each(function(){
-        let player = $(this).html();
-        if(myVal === player){
-            $(".players").html('Sorry, that name is already used.')
-        }
-    });
-})();
 
 /*
 function addScore(myid) {
